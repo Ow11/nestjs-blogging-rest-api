@@ -1,22 +1,22 @@
 import { Injectable } from "@nestjs/common";
-import {CreatePostDto} from "./dto/create-post.dto";
+import {CreateArticleDto} from "./dto/create-article.dto";
 
 @Injectable()
-export class PostsService {
-    private posts = [];
+export class ArticlesService {
+    private articles = [];
 
     getAll() {
-        return this.posts;
+        return this.articles;
     }
 
     getBy(id: string) {
-        return this.posts.find(p => p.id === id);
+        return this.articles.find(p => p.id === id);
     }
 
-    create(postDto: CreatePostDto) {
+    create(articleDto: CreateArticleDto) {
         const id = this.generateId();
-        this.posts.push({
-            ...postDto,
+        this.articles.push({
+            ...articleDto,
             id,
         })
     }
