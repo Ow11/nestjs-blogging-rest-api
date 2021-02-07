@@ -7,8 +7,7 @@ import {
     Patch,
     Body,
     HttpCode,
-    Header,
-    HttpStatus,
+    Header,    HttpStatus,
     HttpException
 } from '@nestjs/common';
 import {ImagesService} from "./images.service";
