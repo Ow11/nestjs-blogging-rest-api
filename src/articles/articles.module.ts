@@ -6,6 +6,4 @@ import {ArticlesService} from "./articles.service";
     providers: [ArticlesService],
     controllers: [ArticlesController]
 })
-export class PostsModule {
-
-}
+export class ArticlesModule {}

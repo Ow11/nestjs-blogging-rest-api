@@ -1,4 +1,4 @@
-import {Controller, Get, Param, Post, Delete, Put, Body, HttpCode, Header, HttpStatus} from '@nestjs/common';
+import {Controller, Get, Param, Post, Delete, Patch, Body, HttpCode, Header, HttpStatus} from '@nestjs/common';
 import {CreateArticleDto} from "./dto/create-article.dto";
 import {UpdateArticleDto} from "./dto/update-article.dto";
 import {ArticlesService} from "./articles.service";
@@ -30,7 +30,7 @@ export class ArticlesController {
         return 'Remove ' + id;
     }
 
-    @Put(':id')
+    @Patch(':id')
     update(@Body() updateArticleDto: UpdateArticleDto, @Param('id') id: string) {
         return 'update ' + id;
     }
