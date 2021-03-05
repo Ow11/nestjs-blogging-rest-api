@@ -1,7 +1,7 @@
 export class UpdateArticleDto {
+    readonly articleId: string;
     readonly title: string;
-    readonly imageId: string;
     readonly perex: string;
-    readonly paragraph: string;
-    readonly createdAt: string;
+    readonly imageId: string;
+    readonly content: string;
 }

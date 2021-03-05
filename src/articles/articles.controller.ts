@@ -8,26 +8,28 @@ export class ArticlesController {
 
     constructor(private readonly articlesService: ArticlesService) {}
 
+    //TODO обрабатывать ошибки
+
     @Get()
-    getAll() {
+    async getAll() {
         return this.articlesService.getAll();
     }
 
     @Get(':id')
-    getBy(@Param('id') id: string): string {
+    async getBy(@Param('id') id: string) {
         return this.articlesService.getBy(id);
     }
 
     @Post()
     @HttpCode(HttpStatus.CREATED)
     @Header('Cache-Control', 'none')
-    create(@Body() createArticleDto: CreateArticleDto) {
+    async create(@Body() createArticleDto: CreateArticleDto) {
         return this.articlesService.create(createArticleDto);
     }
 
     @Delete(':id')
     remove(@Param('id') id: string) {
-        return 'Remove ' + id;
+        return this.articlesService.remove(id);
     }
 
     @Patch(':id')
