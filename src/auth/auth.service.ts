@@ -10,10 +10,21 @@ export class AuthService {
         private readonly jwtService: JwtService
     ) {}
 
+    async createDefaultUsers(): Promise<any> {
+        const users = await this.usersService.pushDefaultUsers();
+        let results = [];
+        users.forEach((user) => {
+            if (user == null)
+                return null;
+            const { password, ...result } = user;
+            results.push(result)
+        });
+        return results;
+    }
+
     async validateUser(username: string, password: string): Promise<any> {
         const user = await this.usersService.findOne(username);
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (user && isMatch) {
+        if (user && await bcrypt.compare(password, user.password)) {
             const { password, ...result } = user;
             return result;
         }

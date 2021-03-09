@@ -7,12 +7,13 @@ import {
     Patch,
     Body,
     HttpCode,
-    Header,    HttpStatus,
-    HttpException
+    Header, HttpStatus,
+    HttpException, UseGuards
 } from '@nestjs/common';
 import {ImagesService} from "./images.service";
 import {CreateImageDto} from "./dto/create-image.dto";
 import {ImageDto} from "./dto/image.dto";
+import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 
 
 @Controller('images')
@@ -21,6 +22,7 @@ export class ImagesController {
     constructor(private readonly imagesService: ImagesService) {}
 
     @Post()
+    @UseGuards(JwtAuthGuard)
     postImage(@Body() createImageDto: CreateImageDto[]): ImageDto[] {
         let imageDto: ImageDto[] = [];
         createImageDto.forEach((name: CreateImageDto) => {
@@ -39,6 +41,7 @@ export class ImagesController {
 
     //TODO: add http status 204, 401
     @Delete(':id')
+    @UseGuards(JwtAuthGuard)
     remove(@Param('id') id: string): any {
         const result = this.imagesService.remove(id);
         if (result)
