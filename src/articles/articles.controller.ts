@@ -18,25 +18,23 @@ import {JwtAuthGuard} from "../auth/jwt-auth.guard";
 
 @Controller('articles')
 export class ArticlesController {
-
     constructor(private readonly articlesService: ArticlesService) {}
 
     //TODO обрабатывать ошибки
 
     @Get()
-    async getAll() {
+    getAll() {
         return this.articlesService.getAll();
     }
 
     @Get(':id')
-    async getBy(@Param('id') id: string) {
+    getBy(@Param('id') id: string) {
         return this.articlesService.getBy(id);
     }
 
     @Post()
     @UseGuards(JwtAuthGuard)
-    @Header('Cache-Control', 'none')
-    async create(@Body() createArticleDto: CreateArticleDto) {
+    create(@Body() createArticleDto: CreateArticleDto) {
         return this.articlesService.create(createArticleDto);
     }
 
@@ -49,6 +47,6 @@ export class ArticlesController {
     @Patch(':id')
     @UseGuards(JwtAuthGuard)
     update(@Body() updateArticleDto: UpdateArticleDto, @Param('id') id: string) {
-        return 'update ' + id;
+        return this.articlesService.update(id, updateArticleDto);
     }
 }

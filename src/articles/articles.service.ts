@@ -1,22 +1,24 @@
-import { Injectable } from "@nestjs/common";
+import {Injectable} from "@nestjs/common";
 import { CreateArticleDto } from "./dto/create-article.dto";
 import {ArticleDto} from "./dto/article.dto";
 import {InjectRepository} from "@nestjs/typeorm";
 import {ArticlesEntity} from "./articles.entity";
 import {Repository} from "typeorm";
 import {UpdateArticleDto} from "./dto/update-article.dto";
+import {UnauthorizedException} from "../HttpExceptions/unauthorized.exception";
+import { v4 as uuid } from "uuid";
 
 @Injectable()
 export class ArticlesService {
     constructor(@InjectRepository(ArticlesEntity) private readonly articleRepository: Repository<ArticlesEntity>) {
     }
 
-    async getAll(): Promise<ArticlesEntity[]> {
+    getAll(): Promise<ArticlesEntity[]> {
         return this.articleRepository.find();
     }
 
-    //TODO get the array of comments
-    async getBy(articleId: string): Promise<ArticlesEntity> {
+    //TODO: get the array of comments
+    getBy(articleId: string): Promise<ArticlesEntity> {
         return this.articleRepository.findOne({articleId});
     }
 
@@ -25,7 +27,7 @@ export class ArticlesService {
         const title = createArticleDto.title;
         const perex = createArticleDto.perex;
         const imageId = createArticleDto.imageId;
-        const createdAt = Date.now().toString();
+        const createdAt = new Date().toISOString();
         const lastUpdatedAt = createdAt;
         const content = createArticleDto.content;
         const article = {
@@ -43,12 +45,11 @@ export class ArticlesService {
 
     async update(articleId: string, updateArticleDto: UpdateArticleDto): Promise<ArticlesEntity> {
         const originalArticle = await this.articleRepository.findOne({articleId})
-
         const title = updateArticleDto.title;
         const perex = updateArticleDto.perex;
         const imageId = updateArticleDto.imageId;
         const createdAt = originalArticle.createdAt;
-        const lastUpdatedAt = Date.now().toString();
+        const lastUpdatedAt = new Date().toISOString();
         const content = updateArticleDto.content;
         const article = {
             articleId,
@@ -64,18 +65,19 @@ export class ArticlesService {
         return this.getBy(articleId);
     }
 
-    async remove(articleId: string): Promise<string> {
+    async remove(articleId: string): Promise<any> {
         const article = await this.articleRepository.findOne({articleId});
         try {
             await this.articleRepository.remove(article);
         }
         catch(e) {
-            return 'Error';
+            throw new UnauthorizedException();
         }
         return 'Article no longer exists';
     }
 
     private generateId(): string {
-        return "art-" + Date.now().toString() + "-" + Math.floor(Math.random() * 9999);
+        return uuid();
+        // return "art-" + Date.now().toString() + "-" + Math.floor(Math.random() * 9999);
     }
 }

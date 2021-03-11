@@ -1,1 +1,3 @@
 Use .env config or environment variables instead of constants (and jwtConstants)
+
+Change default storage for files in ImagesModule
