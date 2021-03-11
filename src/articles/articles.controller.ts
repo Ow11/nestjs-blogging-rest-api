@@ -47,6 +47,6 @@ export class ArticlesController {
     @Patch(':id')
     @UseGuards(JwtAuthGuard)
     update(@Body() updateArticleDto: UpdateArticleDto, @Param('id') id: string) {
-        return this.articlesService.update(id, updateArticleDto);
+        return this.articlesService.update(updateArticleDto);
     }
 }

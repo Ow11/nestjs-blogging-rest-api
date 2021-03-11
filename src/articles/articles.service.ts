@@ -29,12 +29,8 @@ export class ArticlesService {
 
     async create(createArticleDto: CreateArticleDto): Promise<ArticlesEntity> {
         const articleId = this.generateId();
-        // const title = createArticleDto.title;
-        // const perex = createArticleDto.perex;
-        // const imageId = createArticleDto.imageId;
         const createdAt = new Date().toISOString();
         const lastUpdatedAt = createdAt;
-        // const content = createArticleDto.content;
         const comments = [];
         const article = {
             articleId,
@@ -47,22 +43,13 @@ export class ArticlesService {
         return article;
     }
 
-    async update(articleId: string, updateArticleDto: UpdateArticleDto): Promise<ArticlesEntity> {
+    async update(updateArticleDto: UpdateArticleDto): Promise<ArticlesEntity> {
+        const articleId = updateArticleDto.articleId;
         const originalArticle = await this.articleRepository.findOne({articleId})
-        const title = updateArticleDto.title;
-        const perex = updateArticleDto.perex;
-        const imageId = updateArticleDto.imageId;
-        const createdAt = originalArticle.createdAt;
         const lastUpdatedAt = new Date().toISOString();
-        const content = updateArticleDto.content;
         const article = {
-            articleId,
-            title,
-            perex,
-            imageId,
-            createdAt,
             lastUpdatedAt,
-            content,
+            ...updateArticleDto,
         };
         await this.articleRepository.remove(originalArticle)
         await this.articleRepository.save(article);
@@ -71,12 +58,9 @@ export class ArticlesService {
 
     async remove(articleId: string): Promise<any> {
         const article = await this.articleRepository.findOne({articleId});
-        try {
-            await this.articleRepository.remove(article);
-        }
-        catch(e) {
+        if (!article)
             throw new UnauthorizedException();
-        }
+        await this.articleRepository.remove(article);
         return 'Article no longer exists';
     }
 
