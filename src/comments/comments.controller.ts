@@ -15,7 +15,7 @@ export class CommentsController {
     constructor(private readonly commentsService: CommentsService) {}
 
     @Post()
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     postImage(@Body() createCommentDto: CreateCommentDto) {
         return this.commentsService.postComment(createCommentDto);
     }

@@ -1,4 +1,5 @@
-import {Column, Entity, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, OneToMany, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {CommentsEntity} from "../comments/comments.entity";
 
 @Entity()
 export class ArticlesEntity {
@@ -22,4 +23,7 @@ export class ArticlesEntity {
 
     @Column("text")
     content: string;
+
+    @OneToMany(() => CommentsEntity, comments => comments.articleId)
+    comments: CommentsEntity[];
 }

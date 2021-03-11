@@ -33,7 +33,7 @@ export class ArticlesController {
     }
 
     @Post()
-    @UseGuards(JwtAuthGuard)
+    // @UseGuards(JwtAuthGuard)
     create(@Body() createArticleDto: CreateArticleDto) {
         return this.articlesService.create(createArticleDto);
     }

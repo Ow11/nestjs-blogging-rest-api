@@ -19,25 +19,29 @@ export class ArticlesService {
 
     //TODO: get the array of comments
     getBy(articleId: string): Promise<ArticlesEntity> {
-        return this.articleRepository.findOne({articleId});
+        return this.articleRepository.findOne({
+            where: {
+                articleId
+            },
+            relations: ['comments']
+        });
     }
 
     async create(createArticleDto: CreateArticleDto): Promise<ArticlesEntity> {
         const articleId = this.generateId();
-        const title = createArticleDto.title;
-        const perex = createArticleDto.perex;
-        const imageId = createArticleDto.imageId;
+        // const title = createArticleDto.title;
+        // const perex = createArticleDto.perex;
+        // const imageId = createArticleDto.imageId;
         const createdAt = new Date().toISOString();
         const lastUpdatedAt = createdAt;
-        const content = createArticleDto.content;
+        // const content = createArticleDto.content;
+        const comments = [];
         const article = {
             articleId,
-            title,
-            perex,
-            imageId,
             createdAt,
             lastUpdatedAt,
-            content,
+            comments,
+            ...createArticleDto
         };
         await this.articleRepository.save(article);
         return article;

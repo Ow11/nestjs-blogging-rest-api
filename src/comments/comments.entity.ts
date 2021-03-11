@@ -1,11 +1,12 @@
-import {Column, Entity, PrimaryColumn} from "typeorm";
+import {Column, Entity, ManyToOne, PrimaryColumn} from "typeorm";
+import {ArticlesEntity} from "../articles/articles.entity";
 
 @Entity()
 export class CommentsEntity {
     @PrimaryColumn()
     commentId: string;
 
-    @Column()
+    @ManyToOne(() => ArticlesEntity, article => article.comments)
     articleId: string;
 
     @Column()
