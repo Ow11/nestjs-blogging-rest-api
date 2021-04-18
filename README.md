@@ -2,7 +2,7 @@
 
 This is backend part for [this](https://github.com/Applifting/fullstack-exercise) exercise.
 
-** Docker and graphql are not implemented yet. **
+**Docker and graphql are not implemented yet!**
 
 ## Description
 
