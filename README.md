@@ -1,6 +1,6 @@
 # Nest.js blogging rest api
 
-This is backend part for [this](https://github.com/Applifting/fullstack-exercise) exercise.
+It is backend part for [this](https://github.com/Applifting/fullstack-exercise) exercise.
 
 **Docker and graphql are not implemented yet!**
 
